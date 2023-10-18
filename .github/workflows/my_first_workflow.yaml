@@ -21,4 +21,25 @@ jobs:
     
     - name: echo github context
       id: echo_github_context
-      run: echo "ref_name ${{github.ref_name}}\n repository ${{github.repository}}"
+      run: echo "ref_name ${{github.ref_name}}"
+
+    - name: echo github context2
+      id: echo_github_context2
+      run: echo "repository ${{github.repository}}"
+
+    - name: send email
+      id: send_email
+      uses: dawidd6/action-send-mail@v3
+      with:
+        server_address: ${{secrets.EMAIL_SERVER}}
+        server_port: ${{secrets.EMAIL_PORT}}
+        username: ${{secrets.EMAIL_USER}}
+        password: ${{secrets.EMAIL_PASSWORD}}
+        to: f60ab290-3c6e-45af-8af2-29bb26e19491@mailslurp.mx
+        from: e1114566@u.nus.edu
+        subject: "Github workflow from ${{github.ref_name}}"
+        body: "The job is ${{job.status}}"
+
+
+
+
